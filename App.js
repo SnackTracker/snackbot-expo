@@ -6,6 +6,8 @@ export default function App() {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
 
+  const [dietCoke, setDietCoke] = useState(5)
+
   useEffect(() => {
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
@@ -14,11 +16,15 @@ export default function App() {
   }, []);
 
   const handleBarCodeScanned = ({ type, data }) => {
+    console.log('SCANN BEGIN')
     console.log('a', scanned);
     setScanned(true);
     console.log('b', scanned);
+    if (data === '0049000061055') {
+      setDietCoke(dietCoke - 1)
+      console.log(`YOUVE SCANNED A DIET COKE! ${dietCoke} left`)
+    }
     alert(`Bar code with type ${type} and data ${data} has been scanned!`);
-
   };
 
   const revertScan = () => {
