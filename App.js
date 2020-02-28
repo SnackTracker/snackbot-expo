@@ -9,20 +9,15 @@ export default function App() {
   const [count, setCount] = useState(1)
   const [opacity, setOpacity] = useState(0)
 
-  const [dietCoke, setDietCoke] = useState(2)
-  const [lunaBar, setLunaBar] = useState(11)
-  const [sourPatchKids, setSourPatchKids] = useState(7)
+  const [dietCoke, setDietCoke] = useState(12)
+  const [lunaBar, setLunaBar] = useState(18)
+  const [sourPatchKids, setSourPatchKids] = useState(8)
 
   useEffect(() => {
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
       setHasPermission(status === 'granted');
     })();
-    console.log('EFFECT HAPPENING NOW')
-    // setTimeout(()=>{
-    //   setOpacity(0)
-    // }, 1500);
-    // alert(`this is an alert`);
   }, []);
 
   const handleBarCodeScanned = ({ type, data }) => {
@@ -44,15 +39,10 @@ export default function App() {
     setOpacity(.8)
     setTimeout(()=>{
       setOpacity(0)
+      setScanned(false);
     }, 1500);
     console.log(count)
-    // alert(`Bar code with type ${type} and data ${data} has been scanned!`);
   };
-
-  const revertScan = () => {
-    console.log('revert');
-    scanned = false;
-  }
 
   if (hasPermission === null) {
     return <Text>Requesting for camera permission</Text>;
@@ -75,7 +65,7 @@ export default function App() {
         color: 'white', 
         fontSize: 300, 
         width: '100%',
-        bottom: '50%',
+        bottom: '40%',
         opacity
       }}>{count}</Text>
       <Text style={{
@@ -84,14 +74,9 @@ export default function App() {
         color: 'white', 
         fontSize: 55, 
         width: '100%',
-        bottom: '47%',
+        bottom: '37%',
         opacity
       }}>REMAINING</Text>
-      {scanned && <Button
-        style={styles.button}
-          title={'Tap to Scan Again' }
-          onPress={() => setScanned(false)}
-        />}
     </View>
   );
 }
@@ -101,27 +86,5 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'flex-end'
-  },
-  // count: {
-  //   position: 'absolute',
-  //   textAlign: 'center',
-  //   color: 'white', 
-  //   fontSize: 300, 
-  //   width: '100%',
-  //   bottom: '50%',
-  //   opacity: .8
-  // },
-  // label: {
-  //   position: 'absolute',
-  //   textAlign: 'center',
-  //   color: 'white', 
-  //   fontSize: 55, 
-  //   width: '100%',
-  //   bottom: '47%',
-  //   opacity: .8
-  // },
-  button: {
-    position: 'absolute',
-    bottom: '-5rem'
   }
 })
